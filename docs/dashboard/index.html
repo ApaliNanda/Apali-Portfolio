@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key Dashboard | Chokalingam Codes</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <div>
+                <p class="eyebrow">Admin Console</p>
+                <h1>API Key Management</h1>
+                <p class="subtitle">Create, rotate, and revoke API credentials in one place.</p>
+            </div>
+            <div class="header-actions">
+                <button class="ghost-button" id="backToSiteBtn">← Back to Portfolio</button>
+                <button class="primary-button" id="newKeyBtn">New API Key</button>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p class="stat-label">Total Keys</p>
+                <p class="stat-value" id="totalKeys">0</p>
+                <span class="stat-badge neutral">All Environments</span>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Active Keys</p>
+                <p class="stat-value" id="activeKeys">0</p>
+                <span class="stat-badge success">Healthy</span>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Revoked Keys</p>
+                <p class="stat-value" id="revokedKeys">0</p>
+                <span class="stat-badge danger">Action Required</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <section class="panel-grid">
+            <article class="panel form-panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Create or update</p>
+                        <h2>API Key Form</h2>
+                    </div>
+                    <button class="ghost-button small" id="resetFormBtn">Reset Form</button>
+                </div>
+                <form id="apiKeyForm">
+                    <input type="hidden" id="keyId">
+                    <div class="form-group">
+                        <label for="keyName">Key label</label>
+                        <input type="text" id="keyName" placeholder="e.g. Production Billing Service" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ownerName">Owner / Team</label>
+                            <input type="text" id="ownerName" placeholder="Platform Team" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="environment">Environment</label>
+                            <select id="environment" required>
+                                <option value="Production">Production</option>
+                                <option value="Staging">Staging</option>
+                                <option value="Development">Development</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Permissions</label>
+                        <div class="chip-group" id="permissionGroup">
+                            <label><input type="checkbox" value="Read" checked> Read</label>
+                            <label><input type="checkbox" value="Write"> Write</label>
+                            <label><input type="checkbox" value="Billing"> Billing</label>
+                            <label><input type="checkbox" value="Admin"> Admin</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status">
+                                <option value="Active">Active</option>
+                                <option value="Paused">Paused</option>
+                                <option value="Revoked">Revoked</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rateLimit">Rate limit (req/min)</label>
+                            <input type="number" id="rateLimit" min="10" max="10000" step="10" value="600">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" rows="3" placeholder="Internal notes for rotation policy or usage context"></textarea>
+                    </div>
+                    <div class="form-footer">
+                        <button type="button" class="ghost-button" id="generateKeyBtn">Generate secure key</button>
+                        <button type="submit" class="primary-button" id="submitBtn">Save API Key</button>
+                    </div>
+                </form>
+            </article>
+
+            <article class="panel preview-panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Key preview</p>
+                        <h2>Secure token</h2>
+                    </div>
+                    <button class="ghost-button small" id="copyKeyBtn" disabled>Copy token</button>
+                </div>
+                <div class="token-container">
+                    <code id="keyPreviewValue">Click “Generate secure key”</code>
+                </div>
+                <ul class="policy-list">
+                    <li>Keys are shown only once. Copy and store them securely.</li>
+                    <li>Rotate production credentials every 45 days.</li>
+                    <li>Revoke unused keys to reduce attack surface.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="panel keys-panel">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Inventory</p>
+                    <h2>Existing API keys</h2>
+                </div>
+                <div class="table-controls">
+                    <input type="search" id="searchKeys" placeholder="Search by label or owner">
+                    <select id="statusFilter">
+                        <option value="all">All statuses</option>
+                        <option value="Active">Active</option>
+                        <option value="Paused">Paused</option>
+                        <option value="Revoked">Revoked</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Label</th>
+                            <th>Owner</th>
+                            <th>Environment</th>
+                            <th>Permissions</th>
+                            <th>Status</th>
+                            <th>Last used</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="apiKeysTableBody">
+                        <tr>
+                            <td colspan="7" class="empty-state">
+                                No API keys yet. Create one using the form.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

@@ -214,6 +214,14 @@ body {
     animation: fadeInUp 0.8s ease 0.4s both;
 }
 
+.hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 .cta-button {
     background-color: white;
     color: var(--primary-color);
@@ -235,6 +243,27 @@ body {
 }
 
 .cta-button:active {
+    transform: translateY(0);
+}
+
+.secondary-button {
+    background-color: transparent;
+    color: white;
+    padding: 0.95rem 2rem;
+    border-radius: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: white;
+}
+
+.secondary-button:active {
     transform: translateY(0);
 }
 
@@ -600,6 +629,15 @@ section {
 
     .hero-subtitle {
         font-size: 1.2rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    .hero-actions .cta-button,
+    .hero-actions .secondary-button {
+        width: 100%;
     }
 
     .section-title {

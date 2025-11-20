@@ -82,6 +82,16 @@ contactBtn.addEventListener('click', () => {
     }, 1000);
 });
 
+// Dashboard Button Redirect
+const dashboardBtn = document.getElementById('dashboardBtn');
+if (dashboardBtn) {
+    dashboardBtn.addEventListener('click', () => {
+        const repoName = 'Apali-Portfolio';
+        const basePath = window.location.pathname.includes(`/${repoName}`) ? `/${repoName}` : '';
+        window.location.href = `${basePath}/dashboard`;
+    });
+}
+
 // Project Button Click Events
 const projectButtons = document.querySelectorAll('.project-button');
 projectButtons.forEach(button => {
