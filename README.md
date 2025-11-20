@@ -20,7 +20,7 @@ A modern, responsive portfolio website built with HTML, CSS, and JavaScript.
 
 ## Getting Started
 
-Simply open `index.html` in your web browser to view the portfolio.
+Open `docs/index.html` in your web browser to view the portfolio locally.
 
 ## Dark Mode
 
@@ -30,11 +30,14 @@ The portfolio includes a dark mode toggle button in the navigation bar. Your pre
 
 ```
 Portfolio/
-├── index.html          # Main HTML file
-├── styles.css          # All styling and dark mode styles
-├── script.js           # JavaScript functionality
-├── README.md           # This file
-└── [profile-image].jpg # Profile image
+├── docs/
+│   ├── index.html          # Main HTML file served by GitHub Pages
+│   ├── styles.css          # All styling and dark mode styles
+│   ├── script.js           # JavaScript functionality
+│   └── [profile-image].jpg # Profile image
+├── README.md               # Project documentation
+├── push-to-github.ps1      # Helper script to push changes
+└── PUSH_INSTRUCTIONS.md    # Manual push instructions
 ```
 
 ## License
