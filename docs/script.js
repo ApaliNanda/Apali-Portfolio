@@ -114,6 +114,46 @@ projectButtons.forEach(button => {
     });
 });
 
+// Art Purchase Button Events
+const artButtons = document.querySelectorAll('.art-button');
+artButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const artId = button.getAttribute('data-art');
+        const artCard = button.closest('.art-card');
+        const artTitle = artCard.querySelector('.art-title').textContent;
+        const artPrice = artCard.querySelector('.art-price').textContent;
+        
+        // Show purchase confirmation
+        const confirmed = confirm(`${artTitle}\n\nPrice: ${artPrice}\n\nWould you like to proceed with the purchase?\n\n(You will be redirected to contact for payment details)`);
+        
+        if (confirmed) {
+            // Add visual feedback
+            const originalText = button.textContent;
+            button.textContent = 'Processing...';
+            button.style.opacity = '0.7';
+            button.disabled = true;
+            
+            // Scroll to contact section
+            setTimeout(() => {
+                const contactSection = document.querySelector('#contact');
+                if (contactSection) {
+                    contactSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Reset button after delay
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.opacity = '1';
+                    button.disabled = false;
+                }, 2000);
+            }, 500);
+        }
+    });
+});
+
 // Copy Email Button
 const copyEmailBtn = document.getElementById('copyEmailBtn');
 const emailDisplay = document.getElementById('emailDisplay');
